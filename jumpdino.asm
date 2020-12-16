@@ -26,9 +26,6 @@ cacto: .word 0xFFC125
 keyPress: .word 0xFFFF0004
 zero: .word 0x00000000
 
-score: .word 0
-vidas: .word 3
-
 msg: .asciiz "que pena, você perdeu... sua pontuação foi: "
 msgr: .asciiz "deseja recomeçar? 1 para sim e 2 para não"
 
@@ -162,9 +159,10 @@ bne $t0, 0x8B0000, score
 
 addi $t8, $t8, -1
 
-beqz $t8, gameOver
+beq $t8, 0, gameOver
+bne $t8, 0, menosVida
 
-score: add $t9, $t9, 100	
+score: addi $t9, $t9, 100	
 .end_macro
 
 .macro cactus1Left
@@ -182,11 +180,12 @@ score: add $t9, $t9, 100
 
 .text
 reset:
-desenha
 
 li $t9, 0 #salva a pontuação
 li $t8, 3 #salva as vidas
 
+menosVida:
+desenha
 li $a1, 0xFFFF0004 #salva o local da entrada do teclado em a1
 
 jal inicioDino
