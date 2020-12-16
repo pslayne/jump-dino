@@ -157,10 +157,10 @@ screenStart: .word 0x10008000 #a tela começa em $gp
 lw $t0, ($s3)
 bne $t0, 0x8B0000, score
 
-addi $t8, $t8, -1
+addi $v1, $v1, -1
 
-beq $t8, 0, gameOver
-bne $t8, 0, menosVida
+beq $v1, 0, gameOver
+bne $v1, 0, menosVida
 
 score: addi $t9, $t9, 100	
 .end_macro
@@ -182,7 +182,7 @@ score: addi $t9, $t9, 100
 reset:
 
 li $t9, 0 #salva a pontuação
-li $t8, 3 #salva as vidas
+li $v1, 3 #salva as vidas
 
 menosVida:
 desenha
@@ -445,21 +445,21 @@ jumpingDisplayLoop:
 	lw $t0, zero #refresh da entrada do teclado
 	sw $t0, ($a1)
 	
-	li $t1, 0 #começa o contador
+	li $t8, 0 #começa o contador
 	upLoop:
 		dinoUp
 		cactus1Left
 		
-		addi $t1, $t1, 1
-		bne $t1, 12, upLoop
+		addi $t8, $t8, 1
+		bne $t8, 12, upLoop
 	
-	li $t1, 0 #começa o contador
+	li $t8, 0 #começa o contador
 	downLoop:
 		dinoDown
 		cactus1Left
 		
-		addi $t1, $t1, 1
-		bne $t1, 12, downLoop
+		addi $t8, $t8, 1
+		bne $t8, 12, downLoop
 	j displayLoop
 	
 gameOver:
